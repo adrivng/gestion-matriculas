@@ -76,7 +76,7 @@ public class MatriculaService {
                     cursoId
             );
         } catch (Exception e) {
-            throw new RuntimeException("El curso con id " + cursoId + " no existe");
+            throw new RuntimeException("El curso con id " + cursoId + " no existe: " + e.getMessage(), e);
         }
     }
 
@@ -88,7 +88,7 @@ public class MatriculaService {
                     estudianteId
             );
         } catch (Exception e) {
-            throw new RuntimeException("El estudiante con id " + estudianteId + " no existe");
+            throw new RuntimeException("El estudiante con id " + estudianteId + " no existe: " + e.getMessage(), e);
         }
     }
 }

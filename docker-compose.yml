@@ -8,6 +8,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
+      - postgres-data:/var/lib/postgresql/data
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - microservices-net
@@ -17,6 +18,55 @@ services:
       timeout: 5s
       retries: 5
 
+  ms-eureka:
+    build: ./ms-eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-net
+
+  config-server:
+    build: ./config-server
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./config-repo:/config-repo
+    depends_on:
+      ms-eureka:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8888/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - microservices-net
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/db_keycloak
+      KC_DB_USERNAME: adrian
+      KC_DB_PASSWORD: 123456
+      KC_HOSTNAME: keycloak
+      KC_HOSTNAME_STRICT: false
+      KC_HTTP_PORT: 8083
+      KC_PROXY: edge
+    ports:
+      - "8083:8083"
+    volumes:
+      - ./keycloak-realm.json:/opt/keycloak/data/import/realm.json
+    command: start-dev --import-realm --http-port=8083
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - microservices-net
+
   ms-curso:
     build: ./ms-curso
     ports:
@@ -24,6 +74,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      ms-eureka:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
     networks:
       - microservices-net
 
@@ -34,6 +90,12 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      ms-eureka:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
     networks:
       - microservices-net
 
@@ -44,9 +106,18 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      ms-eureka:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
     networks:
       - microservices-net
 
 networks:
   microservices-net:
     driver: bridge
+
+volumes:
+  postgres-data:
