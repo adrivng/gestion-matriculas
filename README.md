@@ -1,130 +1,93 @@
-# 🎓 Sistema de Gestión de Matrículas
+# Sistema de Gestión de Matrículas
 
-Sistema backend desarrollado con una **arquitectura de microservicios** para gestionar estudiantes, cursos y matrículas de un instituto.
+Sistema backend con **arquitectura de microservicios** para gestionar estudiantes, cursos y matrículas de un instituto.
 
-El proyecto implementa servicios independientes, configuración centralizada, descubrimiento de servicios, autenticación con OAuth2 y despliegue mediante Docker.
+Implementa servicios independientes, configuración centralizada, descubrimiento de servicios, autenticación con OAuth2 y despliegue con Docker.
 
----
-
-## 🛠️ Tecnologías
-
-![Java](https://img.shields.io/badge/Java-21-orange)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-green)
+![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-6DB33F?logo=springboot&logoColor=white)
 ![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-Microservices-brightgreen)
-![MySQL](https://img.shields.io/badge/MySQL-Database-blue)
-![Docker](https://img.shields.io/badge/Docker-Containers-blue)
+![MySQL](https://img.shields.io/badge/MySQL-Database-4479A1?logo=mysql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Containers-2496ED?logo=docker&logoColor=white)
 ![Keycloak](https://img.shields.io/badge/Keycloak-OAuth2-purple)
 
-**Backend:** Java · Spring Boot
-**Arquitectura:** Microservicios · Spring Cloud
-**Base de datos:** MySQL
-**Seguridad:** Keycloak · OAuth2
-**Infraestructura:** Docker · Eureka Server · Config Server
+## Tecnologías
 
----
+- **Backend:** Java, Spring Boot
+- **Arquitectura:** Microservicios, Spring Cloud
+- **Base de datos:** MySQL
+- **Seguridad:** Keycloak, OAuth2
+- **Infraestructura:** Docker, Eureka Server, Config Server
 
-## 🧩 Arquitectura
+## Arquitectura
 
 El sistema está dividido en servicios independientes:
 
-### 👤 Estudiante Service
+| Servicio | Descripción |
+|----------|-------------|
+| **ms-estudiante** | Gestiona la información y operaciones de los estudiantes. |
+| **ms-curso** | Administra cursos, horarios e información académica asociada. |
+| **ms-matricula** | Gestiona las matrículas y la relación entre estudiantes y cursos. |
+| **ms-eureka** | Registro y descubrimiento dinámico de los microservicios. |
+| **config-server** | Centraliza la configuración de los diferentes servicios. |
+| **Keycloak** | Autenticación y autorización mediante OAuth2 y roles de usuario. |
 
-Gestiona la información y operaciones relacionadas con los estudiantes.
-
-### 📚 Curso Service
-
-Administra cursos, horarios y la información académica asociada.
-
-### 📝 Matrícula Service
-
-Gestiona las matrículas y la relación entre estudiantes y cursos.
-
-### 🔎 Eureka Server
-
-Permite el registro y descubrimiento dinámico de los microservicios.
-
-### ⚙️ Config Server
-
-Centraliza la configuración utilizada por los diferentes servicios.
-
-### 🔐 Keycloak
-
-Gestiona la autenticación y autorización mediante **OAuth2 y roles de usuario**.
-
----
-
-## 📂 Estructura del proyecto
+## Estructura del proyecto
 
 ```text
 gestion-matriculas/
-│
 ├── config-repo/        # Configuración centralizada
 ├── config-server/      # Spring Cloud Config Server
 ├── ms-curso/           # Microservicio de cursos
 ├── ms-estudiante/      # Microservicio de estudiantes
 ├── ms-eureka/          # Service Discovery
 ├── ms-matricula/       # Microservicio de matrículas
-│
 ├── docker-compose.yml
 ├── init.sql
 └── keycloak-realm.json
 ```
 
----
+## Funcionalidades principales
 
-## ✨ Funcionalidades principales
+- Gestión de estudiantes.
+- Gestión de cursos.
+- Registro y administración de matrículas.
+- Comunicación entre microservicios.
+- Descubrimiento de servicios mediante Eureka.
+- Configuración centralizada mediante Spring Cloud Config.
+- Seguridad basada en roles.
+- Autenticación y autorización con Keycloak y OAuth2.
+- Persistencia de información en MySQL.
+- Contenedorización de los servicios con Docker.
 
-* Gestión de estudiantes.
-* Gestión de cursos.
-* Registro y administración de matrículas.
-* Comunicación entre microservicios.
-* Descubrimiento de servicios mediante Eureka.
-* Configuración centralizada mediante Spring Cloud Config.
-* Seguridad basada en roles.
-* Autenticación y autorización con Keycloak y OAuth2.
-* Persistencia de información en MySQL.
-* Contenedorización de los servicios mediante Docker.
+## Seguridad
 
----
+La seguridad se gestiona con **Keycloak**, utilizando OAuth2 para controlar el acceso a los recursos. Esto permite:
 
-## 🔐 Seguridad
+- Autenticación mediante tokens.
+- Protección de endpoints.
+- Administración de usuarios.
+- Control de acceso basado en roles.
+- Comunicación segura con los servicios protegidos.
 
-La seguridad del sistema se gestiona mediante **Keycloak**, utilizando OAuth2 para controlar el acceso a los recursos.
+## Docker
 
-Esto permite:
-
-* Autenticación mediante tokens.
-* Protección de endpoints.
-* Administración de usuarios.
-* Control de acceso basado en roles.
-* Comunicación segura con los servicios protegidos.
-
----
-
-## 🐳 Docker
-
-El proyecto incluye configuración para ejecutar su infraestructura mediante contenedores.
+El proyecto incluye configuración para ejecutar su infraestructura mediante contenedores:
 
 ```bash
 docker compose up -d
 ```
 
-Esto permite levantar los componentes necesarios del sistema de manera reproducible en diferentes entornos.
+Esto permite levantar los componentes necesarios del sistema de forma reproducible en diferentes entornos.
 
----
-
-## 🎯 Objetivo del proyecto
+## Objetivo del proyecto
 
 Aplicar conceptos de arquitectura de microservicios mediante la construcción de un sistema académico distribuido, incorporando **seguridad, descubrimiento de servicios, configuración centralizada, persistencia de datos y contenedores**.
 
-El proyecto busca demostrar la implementación de una solución backend escalable y modular utilizando tecnologías del ecosistema **Java y Spring**.
+El proyecto busca demostrar una solución backend escalable y modular con tecnologías del ecosistema **Java y Spring**.
 
----
-
-## 👨‍💻 Autor
+## Autor
 
 **Adrian Gabriel Cardenas Lamas**
-
 Desarrollo de Sistemas de Información
-
-[GitHub](https://github.com/adrivng)
+[GitHub: @adrivng](https://github.com/adrivng)
