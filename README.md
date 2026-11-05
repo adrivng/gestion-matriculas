@@ -1,9 +1,11 @@
-# Sistema de Gestión de Matrículas
+# Microservicios de Gestión de Matrículas
 
-Sistema backend con **arquitectura de microservicios** para gestionar estudiantes, cursos y matrículas de un instituto.
+Proyecto de práctica con **arquitectura de microservicios** que expone APIs REST para gestionar estudiantes, cursos y matrículas de un instituto.
 
-Implementa servicios independientes, configuración centralizada, descubrimiento de servicios, autenticación con OAuth2 y despliegue con Docker.
+Integra descubrimiento de servicios con Eureka, configuración centralizada con Config Server, autenticación con Keycloak y OAuth2, y despliegue con Docker.
 
+> **Nota:** este proyecto es una prueba de conocimientos centrada en la comunicación entre APIs y la infraestructura de microservicios. No incluye interfaz de usuario ni pretende ser un sistema completo.
+> 
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-6DB33F?logo=springboot&logoColor=white)
 ![Spring Cloud](https://img.shields.io/badge/Spring%20Cloud-Microservices-brightgreen)
